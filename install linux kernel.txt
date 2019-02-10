@@ -1,0 +1,23 @@
+sudo yum update -y
+sudo reboot now
+
+sudo yum install -y wget gcc make bc bison flex ncurses-devel openssl-devel elfutils-libelf-devel perl
+
+cd /usr/src
+sudo wget https://cdn.kernel.org/pub/linux/kernel/v4.x/linux-4.20.7.tar.xz
+sudo tar xvf linux-4.20.7.tar.xz
+cd linux-4.20.7
+
+sudo cp /boot/config-3.10.0-957.5.1.el7.x86_64 .config
+yes "" | sudo make oldconfig
+sudo make bzImage -j4
+sudo make modules -j4
+sudo make -j4
+sudo make modules_install
+sudo make install
+
+grub2-set-default vmlinuz-4.20.7
+
+sudo reboot now
+
+uname -r

@@ -36,7 +36,10 @@ MACHINES = {
 Vagrant.configure("2") do |config|
 
   MACHINES.each do |boxname, boxconfig|
-
+      
+      # Issue with vagrant on Windows: https://github.com/hashicorp/vagrant/issues/9309
+      config.vm.box_download_insecure = true
+      
       config.vm.define boxname do |box|
 
           box.vm.box = boxconfig[:box_name]
